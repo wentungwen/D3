@@ -3,8 +3,8 @@
   color: rgb(241, 241, 241);
   width: 35;
 } */
-rect {
-  fill: rgba(0, 140, 255, 0.322);
+circle {
+  fill: rgba(0, 140, 255, 0.722);
 }
 
 text {
