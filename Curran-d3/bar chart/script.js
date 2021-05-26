@@ -2,7 +2,7 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-svg.style("background", "#ddd");
+svg.style("background", "rgb(241, 241, 241)");
 const render = (data) => {
   const xValue = (d) => d.population;
   const yValue = (d) => d.country;
@@ -32,38 +32,33 @@ const render = (data) => {
 
   // y 軸
   const yAxis = d3.axisLeft(yScale);
-  const yAxisG = g
-    .append("g")
-    .call(yAxis)
-    .selectAll(".domain, .tick line")
-    .remove();
+  const yAxisG = g.append("g").call(yAxis).attr("class", "axis-label");
+  yAxisG.selectAll(".domain, .tick line").remove();
 
-  // y 軸說明
-  yAxisG
-    .append("text")
-    .text("title")
-    .attr("fill", "#000")
-    .attr("x", "10")
-    .attr("y", "30");
-
-  // x 軸(將G取代為B)
+  // x 軸，
   const xAxisFormaCustom = (num) => d3.format(".3s")(num).replace("G", "B");
-  const xAxis = d3.axisBottom(xScale).tickFormat(xAxisFormaCustom);
+  // xAxis為設定，必須call之後才可設定屬性
+  const xAxis = d3
+    .axisBottom(xScale)
+    .tickFormat(xAxisFormaCustom)
+    .tickSize(-height + (margin.top + margin.bottom + 2));
 
   const xAxisG = g
     .append("g")
     .call(xAxis)
+    .attr("class", "axis-label")
     .attr(
       "transform",
       "translate(" + 0 + ", " + (height - margin.top - margin.bottom) + ")"
     );
+
   //  x軸說明
   xAxisG.select(".domain").remove();
   xAxisG
     .append("text")
     .text("Population")
-    .attr("fill", "#000")
-    .attr("x", "10")
+    .attr("fill", "steelblue")
+    .attr("x", width - 130)
     .attr("y", "30");
 
   // rectangle
@@ -75,8 +70,8 @@ const render = (data) => {
     .attr("height", (d, i) => yScale.bandwidth())
     .attr("y", (d, i) => yScale(yValue(d)));
 
-  // text
-  g.append("text").text("The country population").style("font-size", "2rem");
+  // title
+  g.append("text").text("The country population").attr("class", "title");
 };
 d3.csv("data.csv").then((data) => {
   data.forEach((d) => {
