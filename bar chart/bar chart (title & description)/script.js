@@ -77,6 +77,6 @@ d3.csv("data.csv").then((data) => {
   data.forEach((d) => {
     d.population = +d.population * 1000;
   });
-  //   console.log(data[0].population);
+
   render(data);
 });

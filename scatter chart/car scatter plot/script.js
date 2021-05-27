@@ -123,13 +123,16 @@ d3.csv("data.csv").then((data) => {
   btns.forEach((e) => {
     btnArr.push(data);
     e.addEventListener("click", (e) => {
-      // console.log(e.id);
-      // console.log(e.parentNode.id);
-      // console.log(this.id);
-      xValue = (data) => data.displacement;
+      xValue = (data) => {
+        const xAxisId = e.target.id;
+        data.xAxisId;
+      };
       clearsvg();
       render(data);
     });
   });
   // console.log(data);
 });
+function xValue(data) {
+  return data;
+}

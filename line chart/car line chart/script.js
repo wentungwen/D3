@@ -2,23 +2,15 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-// d.acceleration = +d.acceleration;
-// d.cylinders = +d.cylinders;
-// d.displacement = +d.displacement;
-// d.horsepower = +d.horsepower;
-// d.mpg = +d.mpg;
-// d.weight = +d.weight;
-// d.year = +d.year;
-
 svg.style("background", "rgb(241, 241, 241)");
 const render = (data) => {
-  const title = "the best selling";
+  const title = "Southern Rockies";
 
   //value
-  let xValue = (d) => d.displacement;
-  const xAxisLabel = "displacement";
-  let yValue = (d) => d.horsepower;
-  const yAxisLabel = "horsepower";
+  let xValue = (d) => d.timestamp;
+  const xAxisLabel = "timestamp";
+  let yValue = (d) => d.temp;
+  const yAxisLabel = "temp";
   const margin = {
     top: 50,
     right: 50,
@@ -30,7 +22,7 @@ const render = (data) => {
 
   // x,y scale
   const xScale = d3
-    .scaleLinear()
+    .scaleTime()
     .domain(d3.extent(data, xValue))
     .range([0, innerWidth])
     .nice();
@@ -92,7 +84,7 @@ const render = (data) => {
     .append("circle")
     .attr("cy", (d) => yScale(yValue(d)))
     .attr("cx", (d) => xScale(xValue(d)))
-    .attr("r", 10);
+    .attr("r", 3);
 
   // title
   g.append("text").text(`${title}`).attr("class", "title");
@@ -103,33 +95,13 @@ const clearsvg = () => {
   svg.select("g").remove();
 };
 
-d3.csv("data.csv").then((data) => {
+d3.csv("data_temp.csv").then((data) => {
+  console.log(data);
+
   data.forEach((d) => {
-    d.acceleration = +d.acceleration;
-    d.cylinders = +d.cylinders;
-    d.displacement = +d.displacement;
-    d.horsepower = +d.horsepower;
-    d.mpg = +d.mpg;
-    d.weight = +d.weight;
-    d.year = +d.year;
+    d.temp = +d.temp;
+    d.timestamp = new Date(d.timestamp);
   });
 
   render(data);
-
-  //btn
-  const btns = document.querySelectorAll("button");
-  const btnArr = [];
-
-  btns.forEach((e) => {
-    btnArr.push(data);
-    e.addEventListener("click", (e) => {
-      // console.log(e.id);
-      // console.log(e.parentNode.id);
-      // console.log(this.id);
-      xValue = (data) => data.displacement;
-      clearsvg();
-      render(data);
-    });
-  });
-  // console.log(data);
 });
