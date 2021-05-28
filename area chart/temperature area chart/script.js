@@ -29,7 +29,8 @@ const render = (data) => {
   const yScale = d3
     .scaleLinear()
     .domain(d3.extent(data, yValue))
-    .range([0, innerHeight]);
+    .range([innerHeight, 0])
+    .nice();
 
   const g = svg
     .append("g")
@@ -77,7 +78,23 @@ const render = (data) => {
     .attr("y", "30")
     .attr("class", "intro-title");
 
-  // circle
+  // path：折線圖
+  const lineGenerator = d3
+    .line()
+    .x((d) => xScale(xValue(d)))
+    .y((d) => yScale(yValue(d)));
+  g.append("path").attr("class", "line-path").attr("d", lineGenerator(data));
+  console.log(lineGenerator(data));
+
+  // area：面積圖
+  const areaGenerator = d3
+    .area()
+    .x((d) => xScale(xValue(d)))
+    .y((d) => yScale(yValue(d)));
+  g.append("path").attr("class", "area-path").attr("d", areaGenerator(data));
+  console.log(areaGenerator(data));
+
+  // circle：散布圖
   g.selectAll("circle")
     .data(data)
     .enter()
@@ -102,6 +119,6 @@ d3.csv("data_temp.csv").then((data) => {
     d.temp = +d.temp;
     d.timestamp = new Date(d.timestamp);
   });
-
+  // Fri Aug 15 2042 08:00:00 GMT+0800 (台北標準時間)
   render(data);
 });
