@@ -24,6 +24,7 @@ text {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--grey-color8);
+  text-anchor: middle;
 }
 .axis-label .tick line {
   color: var(--grey-color1);
@@ -49,6 +50,7 @@ button:hover {
 
 .intro-title {
   font-size: 1rem;
+  text-anchor: middle;
 }
 
 .line-path {
@@ -56,4 +58,7 @@ button:hover {
   stroke-width: 4;
   fill: transparent;
   stroke-linejoin: round;
+}
+.area-path {
+  fill: steelblue;
 }

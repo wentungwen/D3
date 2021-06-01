@@ -15,7 +15,7 @@ const render = (data) => {
     top: 50,
     right: 50,
     bottom: 50,
-    left: 50,
+    left: 60,
   };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -24,8 +24,8 @@ const render = (data) => {
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(data, xValue))
-    .range([0, innerWidth])
-    .nice();
+    .range([0, innerWidth]);
+
   const yScale = d3
     .scaleLinear()
     .domain(d3.extent(data, yValue))
@@ -36,10 +36,23 @@ const render = (data) => {
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
+  // area：面積圖
+  const areaGenerator = d3
+    .area()
+    .curve(d3.curveBasis)
+    .x((d) => xScale(xValue(d)))
+    .y1((d) => yScale(yValue(d)))
+    .y0(innerHeight);
+  g.append("path").attr("class", "area-path").attr("d", areaGenerator(data));
+
   // y 軸
+  const yAxisFormatCustom = (num) => d3.format(".2s")(num).replace("G", " B");
+
   const yAxis = d3
     .axisLeft(yScale)
-    .tickSize(-height + (margin.left + margin.right));
+    .tickSize(-height + (margin.left + margin.right))
+    .ticks(10)
+    .tickFormat(yAxisFormatCustom);
   const yAxisG = g.append("g").call(yAxis).attr("class", "axis-label");
   yAxisG.select(".domain").attr("stroke", "rgba(0, 0, 0, 0.1)");
 
@@ -49,15 +62,16 @@ const render = (data) => {
     .append("text")
     .text(`${yAxisLabel}`)
     .attr("fill", "steelblue")
-    .attr("x", 0)
-    .attr("y", -20)
+    .attr("x", -innerHeight / 2)
+    .attr("y", -40)
     .attr("transform", "rotate(-90)")
     .attr("class", "intro-title");
 
   // x 軸 xAxis為設定
   const xAxis = d3
     .axisBottom(xScale)
-    .tickSize(-height + (margin.top + margin.bottom));
+    .tickSize(-height + (margin.top + margin.bottom))
+    .ticks(6);
   // call之後才可設定屬性
   const xAxisG = g
     .append("g")
@@ -74,37 +88,17 @@ const render = (data) => {
     .append("text")
     .text(`${xAxisLabel}`)
     .attr("fill", "steelblue")
-    .attr("x", width - 130)
-    .attr("y", "30")
+    .attr("x", innerWidth / 2)
+    .attr("y", "35")
     .attr("class", "intro-title");
 
-  // path：折線圖
-  const lineGenerator = d3
-    .line()
-    .x((d) => xScale(xValue(d)))
-    .y((d) => yScale(yValue(d)));
-  g.append("path").attr("class", "line-path").attr("d", lineGenerator(data));
-  console.log(lineGenerator(data));
-
-  // area：面積圖
-  const areaGenerator = d3
-    .area()
-    .x((d) => xScale(xValue(d)))
-    .y((d) => yScale(yValue(d)));
-  g.append("path").attr("class", "area-path").attr("d", areaGenerator(data));
-  console.log(areaGenerator(data));
-
-  // circle：散布圖
-  g.selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("cy", (d) => yScale(yValue(d)))
-    .attr("cx", (d) => xScale(xValue(d)))
-    .attr("r", 3);
-
   // title
-  g.append("text").text(`${title}`).attr("class", "title");
+  svg
+    .append("text")
+    .text(`${title}`)
+    .attr("class", "title")
+    .attr("x", width / 2)
+    .attr("y", "40");
 };
 
 // clear svg

@@ -1,0 +1,64 @@
+/* .big {
+  background-color: #fff;
+  color: rgb(241, 241, 241);
+  width: 35;
+} */
+:root {
+  --darkblue-color: rgba(0, 102, 185, 0.493);
+  --grey-color1: rgba(0, 0, 0, 0.1);
+  --grey-color6: rgba(0, 0, 0, 0.6);
+  --grey-color8: rgba(0, 0, 0, 0.8);
+}
+circle {
+  fill: var(--darkblue-color);
+}
+
+text {
+  font-family: sans-serif;
+  text-transform: capitalize;
+  font-weight: 900;
+}
+.title {
+  transform: translateY(-10px);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--grey-color8);
+  text-anchor: middle;
+}
+.axis-label .tick line {
+  color: var(--grey-color1);
+}
+.axis-label .tick text {
+  color: var(--grey-color6);
+}
+h3 {
+  color: var(--grey-color6);
+}
+button {
+  padding: 0.3rem 0.4rem;
+  margin: 0.2rem 0;
+  background-color: #fff;
+  border: steelblue 1px solid;
+  color: steelblue;
+}
+button:hover {
+  background-color: steelblue;
+  color: #fff;
+  cursor: pointer;
+}
+
+.intro-title {
+  font-size: 1rem;
+  text-anchor: middle;
+}
+
+.line-path {
+  stroke: rgba(0, 0, 0, 0.2);
+  stroke-width: 4;
+  fill: transparent;
+  stroke-linejoin: round;
+}
+.area-path {
+  fill: steelblue;
+}

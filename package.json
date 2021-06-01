@@ -1,0 +1,26 @@
+{
+  "name": "D3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production webpack --watch",
+    "build-dev": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wentungwen/D3.git"
+  },
+  "keywords": [],
+  "author": "wenwenwne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wentungwen/D3/issues"
+  },
+  "homepage": "https://github.com/wentungwen/D3#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
+}
