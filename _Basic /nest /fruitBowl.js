@@ -11,9 +11,18 @@ const radiusScale = d3
 const xPosition = (d, i) => i * 100 + 60;
 export const fruitBowl = (selection, props) => {
   const { fruits, height } = props;
-  const circles = selection.selectAll("circle").data(fruits, (d) => d.id);
 
-  circles
+  // group
+  const groups = selection.selectAll("g").data(fruits, (d) => d.id);
+  const groupEnter = groups.enter().append("g");
+  groupEnter
+    .merge(groups)
+    .attr("transform", (d, i) => `translate${i * 100 + 60},${height / 2}`);
+  groups.exit().remove();
+
+  //circle
+  const circles = groups.select("circle");
+  groupEnter
     .enter()
     .append("circle")
     .attr("cx", xPosition)
@@ -24,6 +33,16 @@ export const fruitBowl = (selection, props) => {
     .attr("r", (d) => radiusScale(d.type))
     .attr("cx", xPosition)
     .attr("fill", (d) => colorScale(d.type));
-
   circles.exit().transition().duration(500).attr("r", 0).remove();
+
+  // text
+  const texts = groups.selectAll("text").data(fruits, (d) => d.id);
+  texts
+    .enter()
+    .append("text")
+    .attr("x", xPosition)
+    .attr("y", height / 2)
+    .merge(texts)
+    .text((d) => d.type);
+  texts.exit().attr("r", 0).remove();
 };

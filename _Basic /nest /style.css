@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+text {
+  font-size: 1rem;
+  text-anchor: middle;
+  transform: translateY(5rem);
+}
