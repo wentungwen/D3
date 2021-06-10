@@ -1,0 +1,26 @@
+/* .big {
+  background-color: #fff;
+  color: rgb(241, 241, 241);
+  width: 35;
+} */
+path {
+  fill: rgb(158, 255, 120);
+  stroke: rgba(0, 0, 0, 0.1);
+}
+
+text {
+  font-family: sans-serif;
+  text-transform: capitalize;
+  font-weight: 900;
+}
+.title {
+  transform: translateY(-10px);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+svg {
+  background-color: rgb(82, 155, 216);
+}
