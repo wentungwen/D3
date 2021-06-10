@@ -2,7 +2,7 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-const projection = d3.geoStereographic();
+const projection = d3.geoOrthographic();
 // console.log(countries.features);
 const pathGenerator = d3.geoPath().projection(projection);
 
